@@ -1,0 +1,111 @@
+---
+permalink: deploy/task_deploy_ontap_tools.html 
+sidebar: sidebar 
+keywords:  
+summary: 어플라이언스를 사용하려면 사용자 환경에 ONTAP 툴을 구축하고 필요한 매개 변수를 지정해야 합니다. 
+---
+= ONTAP 툴을 구축하는 방법
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+어플라이언스를 사용하려면 사용자 환경에 ONTAP 툴을 구축하고 필요한 매개 변수를 지정해야 합니다.
+
+* 필요한 것 *
+
+* 지원되는 vCenter Server 릴리즈를 실행 중이어야 합니다.
++
+
+NOTE: ONTAP 툴은 vCenter Server의 Windows 구축 또는 VMware vCSA(vCenter Server Virtual Appliance) 구축 시 등록할 수 있습니다.
+
++
+https://imt.netapp.com/matrix/imt.jsp?components=105475;&solution=1777&isHWU&src=IMT["상호 운용성 매트릭스 툴"^]
+
+* vCenter Server 환경을 구성하고 설정해야 합니다.
+* 가상 머신에 대해 ESXi 호스트를 설정해야 합니다.
+* _.ova_file을 다운로드해야 합니다.
+* vCenter Server 인스턴스에 대한 관리자 로그인 자격 증명이 있어야 합니다.
+* vSphere Client의 모든 브라우저 세션에서 로그아웃하고 닫았어야 하며, ONTAP 툴 구축 중 브라우저 캐시 문제를 방지하기 위해 브라우저 캐시를 삭제해야 합니다.
+* ICMP(Internet Control Message Protocol)를 활성화해야 합니다.
++
+ICMP가 비활성화되면 ONTAP 도구의 초기 구성에 장애가 발생하고 구축 후 VSC 및 VASA 공급자 서비스를 시작할 수 없습니다. 구축 후에는 VSC 및 VASA Provider 서비스를 수동으로 설정해야 합니다.
+
+
+
+* 이 작업에 대한 정보 *
+
+ONTAP 툴을 새로 설치하는 경우 VASA Provider가 기본적으로 설정됩니다. 하지만 ONTAP 툴의 이전 릴리즈에서 업그레이드하는 경우 VASA Provider의 상태가 유지되므로 VASA Provider를 수동으로 설정해야 할 수 있습니다.
+
+link:../deploy/task_enable_vasa_provider_for_configuring_virtual_datastores.html["가상 데이터 저장소를 구성하기 위해 VASA Provider를 설정합니다"]
+
+* 단계 *
+
+. vSphere Client에 로그인합니다.
+. 홈 * > * 호스트 및 클러스터 * 를 선택합니다.
+. 필요한 데이터 센터를 마우스 오른쪽 단추로 클릭한 다음 * Deploy OVF template... * 를 클릭합니다.
+. ONTAP 도구에 대한 배포 파일을 제공할 적절한 방법을 선택한 후 * 다음 * 을 클릭합니다.
++
+|===
+
+
+| * 위치 * | * 작업 * 
+
+
+ a| 
+URL
+ a| 
+ONTAP 도구에 대한 _.ova_file의 URL을 제공합니다.
+
+
+
+ a| 
+폴더
+ a| 
+로컬 시스템에 .ova 파일이 포함된 .zip 파일의 압축을 풉니다. OVF 템플릿 선택 페이지에서 압축을 푼 폴더 내의 .ova 파일 위치를 지정합니다.
+
+|===
+. 세부 정보를 입력하여 구축 마법사를 사용자 지정합니다.
++
+(선택 사항) vCenter 구성 또는 VCF 활성화 섹션에서 * VCF(VMware Cloud Foundation) * 활성화 * 확인란을 선택하고 ONTAP 툴 자격 증명에 대한 암호를 제공합니다.
+IP 주소를 제공할 필요는 없지만 비밀번호를 입력해야 합니다.
+자세한 내용은 다음을 참조하십시오.
+
++
+** link:../deploy/reference_considerations_for_deploying_ontap_tools_for_vmware_vsphere.html["배포 사용자 지정 고려 사항"]
+** link:../deploy/vmware_cloud_foundation_mode_deployment.html["ONTAP 툴을 위한 VMware 클라우드 기반 구축 모드입니다"]
+
+
+. 구성 데이터를 검토한 후 * Next * 를 클릭하여 배포를 마칩니다.
++
+배포가 완료될 때까지 기다리면 작업 탭에서 배포 진행률을 볼 수 있습니다.
+
+. ONTAP 툴 가상 머신의 전원을 켠 다음 ONTAP 툴을 실행하는 가상 머신의 콘솔을 엽니다.
+. 배포가 완료된 후 ONTAP 도구가 실행 중인지 확인합니다.
+. vCenter Server에 ONTAP 툴이 등록되지 않은 경우 를 사용합니다 `\https://appliance_ip:8143/Register.html` VSC 인스턴스를 등록합니다. Register.html 을 클릭하면 Swagger 페이지로 이동합니다. ONTAP 툴 9.12 이후 vCenter에 ONTAP 툴을 등록하는 작업은 swagger 페이지에서 수행됩니다.
++
+POST API를 사용하여 9.12부터 vCenter에 ONTAP 툴을 등록합니다.
+
++
+[listing]
+----
+/2.0/plugin/vcenter
+----
+. 구축된 ONTAP 툴을 보려면 vSphere Client에서 로그아웃한 후 다시 로그인하십시오.
++
+vSphere Client에서 플러그인을 업데이트하는 데 몇 분 정도 걸릴 수 있습니다.
+
++
+* 문제 해결: * 로그인 후에도 플러그인을 볼 수 없는 경우 vSphere Client 캐시를 정리해야 합니다.
+
++
+link:../deploy/task_clean_the_vsphere_cached_downloaded_plug_in_packages.html["vSphere 캐시된 다운로드 플러그인 패키지를 지웁니다"]
+
+
+
+link:../deploy/task_enable_vasa_provider_for_configuring_virtual_datastores.html["가상 데이터 저장소를 구성하기 위해 VASA Provider를 설정합니다"]
+
+* 관련 정보 *
+
+https://kb.netapp.com/?title=Advice_and_Troubleshooting%2FData_Storage_Software%2FVirtual_Storage_Console_for_VMware_vSphere%2FError_during_fresh_deployment_of_virtual_appliance_for_VSC%252C_VASA_Provider%252C_and_SRA["VSC, VASA Provider, SRA를 위한 가상 어플라이언스를 새로 구축하는 동안 오류가 발생했습니다"]
