@@ -1,5 +1,10 @@
 ---
 indexpage:
+  title: VMware vSphere용 ONTAP 툴 설명서
+  summary: VMware vSphere용 ONTAP 툴을 사용하면 vCenter Server 환경에서 가상 데이터 저장소를 구성, 관리 및
+    보호할 수 있습니다.
+  keywords: ontap tools for vmware vsphere, ontap 9.11, deploy, configure, data store,
+    high availability
   lead: VMware vSphere용 ONTAP 툴을 사용하면 vCenter Server 환경에서 가상 데이터 저장소를 구성, 관리 및 보호할
     수 있습니다.
   tiles:
@@ -44,6 +49,6 @@ indexpage:
     - title: NetApp 기술 자료 - ONTAP 툴
       url: https://kb.netapp.com/Advice_and_Troubleshooting/Data_Storage_Software/VSC_and_VASA_Provider
     - title: NetApp 가져오기 유틸리티 - 비디오
-      url: https://www.youtube.com/watch?v=CEQmIEzNVfA
+      url: https://www.youtube.com/watch?v=aFKyPEx67Dk
     - title: NetApp 커뮤니티 - ONTAP 툴
       url: https://community.netapp.com/t5/VMware-Solutions-Discussions/bd-p/vmware-solutions-discussions
